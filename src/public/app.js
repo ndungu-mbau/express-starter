@@ -1,0 +1,1 @@
+console.log({ message: "Hello. I was served from the server" })
