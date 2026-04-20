@@ -42,7 +42,7 @@ This repository demonstrates:
 
 ## Get started with `npx degit`
 
-(Note: If you are on Windows, you should run all these commands using `GIT Bash`)
+**(Note: If you are on Windows, you should run all these commands using `GIT Bash`)**
 
 Use `npx degit` to clone the repository without Git history:
 
@@ -86,6 +86,35 @@ The repository includes a `.env` file with default settings. Key variables:
 - `DATABASE_NAME` - database name for Docker compose
 
 If you modify any values, save them in `.env` before starting the application.
+
+## Connect to a Neon database
+
+To use Neon instead of the local Docker database, point `DATABASE_URL` at your Neon Postgres URL.
+
+1. Create a Neon project and a branch in the Neon dashboard.
+2. Copy the **connection string** from Neon. It should look like:
+
+```bash
+postgresql://<user>:<password>@<host>:<port>/<database>
+```
+
+3. Update `.env` with the Neon connection string:
+
+```env
+PORT=4000
+DATABASE_URL="postgresql://<user>:<password>@<host>:<port>/<database>"
+DATABASE_USER="<user>"
+DATABASE_PASSWORD="<password>"
+DATABASE_NAME="<database>"
+```
+
+4. Start the app normally after saving `.env`:
+
+```bash
+pnpm run dev
+```
+
+> If you use Neon with branch-specific connection strings, make sure the `DATABASE_URL` value references the correct branch endpoint.
 
 ## Start the database
 
