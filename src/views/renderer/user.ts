@@ -14,6 +14,21 @@ usersRouter.get('/', expressAsyncHandler(async (req, res) => {
     })
 }))
 
+usersRouter.get('/:id', expressAsyncHandler(async (req, res) => {
+    const userId = req.params.id as string
+
+    const user = await getUserById(userId)
+
+    if (!user) {
+        return res.status(404).render('404', { title: "User not found", message: "User not found" })
+    }
+
+    res.render('user', {
+        user,
+        title: `User ${user.name}`
+    })
+}))
+
 export {
     usersRouter
 }

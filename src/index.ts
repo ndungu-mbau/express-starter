@@ -22,7 +22,7 @@ app.get('/health', (req, res) => {
     res.json({ message: "Application is up and healthy" })
 })
 
-app.use('/views', rendererRouter)
+app.use('/pages', rendererRouter)
 app.use('/api', apiRouter)
 
 app.listen(port, () => console.log(`Application running at port ${port}`))
