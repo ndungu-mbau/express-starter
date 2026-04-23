@@ -19,11 +19,16 @@ app.set("views", path.join(__dirname, 'templates'))
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
 app.get('/health', (req, res) => {
-    res.json({ message: "Application is up and healthy" })
+    res.json({ status: 'ok' })
 })
 
 app.use('/pages', rendererRouter)
 app.use('/api', apiRouter)
+
+app.use((err: Error, req: express.Request, res: express.Response) => {
+    console.error(err)
+    res.status(500).json({ error: `Internal Server Error: ${err.message}` })
+})
 
 app.listen(port, () => console.log(`Application running at port ${port}`))
 

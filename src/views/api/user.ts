@@ -1,23 +1,40 @@
 import { Router } from "express";
-import expressAsyncHandler from "express-async-handler";
-import { readAllUsers, getUserById } from "../../controllers/user";
+import { validateRequest } from "zod-express-middleware";
 
-const usersRouter = Router()
+import { userController } from "../../controllers";
+import { findUserByEmailSchema, createUserSchema } from "../../validators/user-validators";
 
-usersRouter.get('/', expressAsyncHandler(async (req, res) => {
-    const users = await readAllUsers()
+const usersRouter = Router();
 
-    res.json({ users })
-}))
+usersRouter.get("/", validateRequest({ query: findUserByEmailSchema }), async (req, res) => {
 
-usersRouter.get('/:id', expressAsyncHandler(async (req, res) => {
-    const id: string = req.params.id as string
+  const { email } = req.query
 
-    const user = await getUserById(id)
+  if (email) {
+    const user = await userController.findUserByEmail(email);
 
-    res.json({ user })
-}))
+    if(!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
 
-export {
-    usersRouter
-}
+    res.json({ data: user });
+    return;
+  }
+  const data = await userController.findAll();
+  res.json({ data });
+});
+
+usersRouter.get("/:id", async (req, res) => {
+  const id: string = req.params.id as string;
+    const data = await userController.findById(id);
+    res.json({ data });
+});
+
+usersRouter.post("/", validateRequest({ body: createUserSchema }), async (req, res) => {
+  const newUser = req.body
+  const data = await userController.create(newUser);
+  res.json({ data });
+});
+
+export { usersRouter };
