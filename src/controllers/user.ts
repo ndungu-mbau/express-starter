@@ -5,9 +5,9 @@ import { User, CreateUserInput } from '../validators'
 
 import type { BaseController } from "./base-controller";
 
-type UserController = BaseController & {
+type UserController = Omit<BaseController & {
   findUserByEmail: (email: string) => Promise<any>;
-};
+}, "create">;
 
 export const createUserController = (db: typeof import("../db").db) => {
   const userController = {
@@ -29,10 +29,6 @@ export const createUserController = (db: typeof import("../db").db) => {
       });
 
       return userResult;
-    },
-    create: async (obj: CreateUserInput) => {
-      const newUser = await db.insert(users).values(obj).returning();
-      return newUser;
     },
     update: async (id: string, obj: Partial<User>) => {
       const updatedUser = await db

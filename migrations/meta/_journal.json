@@ -8,6 +8,20 @@
       "when": 1776673487966,
       "tag": "0000_deep_cerebro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776929976496,
+      "tag": "0001_past_vision",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776932701688,
+      "tag": "0002_bouncy_lorna_dane",
+      "breakpoints": true
     }
   ]
 }
