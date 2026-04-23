@@ -61,8 +61,7 @@ authRouter.post(
 
     res
       .cookie(SESSION_COOKIE, sessionId, COOKIE_OPTIONS)
-      .status(201)
-      .json({ user: { id: user.id, email: user.email } });
+      .json({ message: "Registration successful", user: { id: user.id, email: user.email } });
   },
 );
 
@@ -101,7 +100,7 @@ authRouter.post("/login", processRequestBody(loginSchema), async (req, res) => {
 
   res
     .cookie(SESSION_COOKIE, sessionId, COOKIE_OPTIONS)
-    .json({ user: { id: user.id, email: user.email } });
+    .json({ message: "Login successful", user: { id: user.id, email: user.email } });
 });
 
 // POST /auth/logout

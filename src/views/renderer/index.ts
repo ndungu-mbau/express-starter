@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { usersRouter } from './user'
+import { authRendererRouter } from './auth'
 
 const rendererRouter = Router()
 
@@ -11,6 +12,7 @@ rendererRouter.get('/', (req, res) => {
 })
 
 rendererRouter.use('/users', usersRouter)
+rendererRouter.use('/', authRendererRouter)
 
 export {
     rendererRouter
